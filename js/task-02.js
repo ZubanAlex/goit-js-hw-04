@@ -2,16 +2,20 @@
 const inventory = {
   items: ['Монорельса', 'Фильтр'],
   add(itemName) {
-    inventory.items.push(itemName);
+    this.items.push(itemName);
   },
   remove(itemName) {
-    inventory.items = inventory.items.filter(item => item !== itemName);
+    this.items = this.items.filter(item => item !== itemName);
   },
+};
+
+const action = function(callback) {
+  callback();
 };
 
 const invokeInventoryOperation = function(itemName, inventoryAction) {
   console.log(`Invoking ${inventoryAction.name} opeartion on ${itemName}`);
-  inventoryAction(itemName);
+  action(inventoryAction.bind(inventory, itemName));
 };
 
 invokeInventoryOperation('Аптечка', inventory.add);
